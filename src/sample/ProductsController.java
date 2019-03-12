@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-public class Controller implements Initializable {
+public class ProductsController implements Initializable {
 
     @FXML
     private TextField textField;
@@ -46,7 +46,7 @@ public class Controller implements Initializable {
     // The sorted list will use this comparator by default
     private final Comparator<? super String> comparator;
 
-    public Controller() {
+    public ProductsController() {
         products = FXCollections.observableArrayList();
         filtered = new FilteredList<>(products);
 
@@ -67,9 +67,16 @@ public class Controller implements Initializable {
         products.add("Back seats");
         products.add("Front seats");
         products.add("Rear View Mirror (right)");
+        products.add("Oil Catch Can");
         products.add("Rear View Mirror (left)");
         products.add("Cylinder Head");
         products.add("Cylinder Head Gasket");
+        products.add("Brake Caliper (front right)");
+        products.add("Turbo Charger");
+        products.add("Super Charger");
+        products.add("Stroker Kit");
+        products.add("Oil Cooler");
+        products.add("Brake Caliper (front left)");
 
         // assign only the filtered list to the list view
         listView.setItems(sorted);

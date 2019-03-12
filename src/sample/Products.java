@@ -8,19 +8,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class Products extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = createView();
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Products: Sortable and Filterable ListView");
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
     private static Parent createView() throws IOException  {
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("sample.fxml"));
-        Controller controller = new Controller();
+        FXMLLoader loader = new FXMLLoader(ProductsController.class.getResource("ProductsView.fxml"));
+        ProductsController controller = new ProductsController();
         loader.setController(controller);
         return loader.load();
     }
