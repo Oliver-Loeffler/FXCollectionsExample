@@ -3,3 +3,9 @@ out/
 bin/
 build/
 target/
+.gradle/
+.mvnw/
+.idea/
+.project
+.settings
+.classpath
