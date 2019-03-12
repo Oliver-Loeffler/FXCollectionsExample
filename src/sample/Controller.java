@@ -3,7 +3,6 @@ package sample;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -36,35 +35,44 @@ public class Controller implements Initializable {
     private Button sortDescending;
 
     // This list will hold all available data.
-    private final ObservableList<String> productsList = FXCollections.observableArrayList();
-
-    // This list will provide a sorted view on the data in products list.
-    private final SortedList<String> productsButSorted = new SortedList<>(productsList);
+    private final ObservableList<String> products;
 
     // This one applies a predicate to filter sorted data.
-    private final FilteredList<String> productsFiltered = new FilteredList<>(productsButSorted);
+    private final FilteredList<String> filtered;
 
-    private final Comparator<String> ascending = (a,b)->a.compareTo(b);
+    // This list will provide a sorted view on the data in products list.
+    private final SortedList<String> sorted;
+
+    // The sorted list will use this comparator by default
+    private final Comparator<? super String> comparator;
+
+    public Controller() {
+        products = FXCollections.observableArrayList();
+        filtered = new FilteredList<>(products);
+
+        comparator = Comparator.naturalOrder(); // for String its the same like: (a,b)->a.compareTo(b)
+        sorted = new SortedList<>(filtered, comparator);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         // populate the initial observable list
-        productsList.add("Air Pressure Sensor");
-        productsList.add("Soap");
-        productsList.add("Paint Wax");
-        productsList.add("Rear View Mirror (middle)");
-        productsList.add("Z28 exhaust");
-        productsList.add("Oil");
-        productsList.add("Back seats");
-        productsList.add("Front seats");
-        productsList.add("Rear View Mirror (right)");
-        productsList.add("Rear View Mirror (left)");
-        productsList.add("Cylinder Head");
-        productsList.add("Cylinder Head Gasket");
+        products.add("Air Pressure Sensor");
+        products.add("Soap");
+        products.add("Paint Wax");
+        products.add("Rear View Mirror (middle)");
+        products.add("Z28 exhaust");
+        products.add("Oil");
+        products.add("Back seats");
+        products.add("Front seats");
+        products.add("Rear View Mirror (right)");
+        products.add("Rear View Mirror (left)");
+        products.add("Cylinder Head");
+        products.add("Cylinder Head Gasket");
 
         // assign only the filtered list to the list view
-        listView.setItems(productsFiltered);
+        listView.setItems(sorted);
 
         // visibility control for the list view
         BooleanBinding sortingButtonsAreFocused = Bindings.or(sortAscending.focusedProperty(), sortDescending.focusedProperty());
@@ -72,15 +80,15 @@ public class Controller implements Initializable {
         listView.visibleProperty().bind(listViewVisibility);
 
         // selection of comparator for sorting
-        sortDescending.setOnAction(actionEvent->productsButSorted.setComparator(ascending.reversed()));
-        sortAscending.setOnAction(actionEvent->productsButSorted.setComparator(ascending));
+        sortDescending.setOnAction(actionEvent-> sorted.setComparator(comparator.reversed()));
+        sortAscending.setOnAction(actionEvent-> sorted.setComparator(comparator));
 
         // filter mechanism
         textField.textProperty().addListener((o,a,b)->{
             if (null != b && b != a) {
                 Predicate<String> filterCriterion = value->value.toLowerCase()
                         .contains(textField.textProperty().getValueSafe().toLowerCase());
-                productsFiltered.setPredicate(filterCriterion);
+                filtered.setPredicate(filterCriterion);
             }
         });
 
