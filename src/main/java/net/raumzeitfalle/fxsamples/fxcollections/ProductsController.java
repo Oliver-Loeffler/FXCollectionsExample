@@ -1,4 +1,4 @@
-package sample;
+package net.raumzeitfalle.fxsamples.fxcollections;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;

@@ -1,4 +1,4 @@
-package sample;
+package net.raumzeitfalle.fxsamples.fxcollections;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
