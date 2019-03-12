@@ -15,6 +15,10 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'javafx-gradle-plugin'
 
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '5.2.1'
+}
 
 jfx {
     mainClass = 'net.raumzeitfalle.fxsamples.fxcollections.Products'
