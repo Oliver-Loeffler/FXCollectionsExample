@@ -1,0 +1,21 @@
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: "8.8.2"
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'javafx-gradle-plugin'
+
+
+jfx {
+    mainClass = 'net.raumzeitfalle.fxsamples.fxcollections.Products'
+}

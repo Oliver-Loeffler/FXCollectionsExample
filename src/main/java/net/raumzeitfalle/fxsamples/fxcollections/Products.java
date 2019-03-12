@@ -1,4 +1,4 @@
-package net.raumzeitfalle.fxsamples.fxcollections;
+package net.raumzeitfalle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class Products extends Application {
     }
 
     private static Parent createView() throws IOException  {
-        FXMLLoader loader = new FXMLLoader(ProductsController.class.getResource("ProductsView.fxml"));
+        FXMLLoader loader = new FXMLLoader(ProductsController.class.getResource("Products.fxml"));
         ProductsController controller = new ProductsController();
         loader.setController(controller);
         return loader.load();
