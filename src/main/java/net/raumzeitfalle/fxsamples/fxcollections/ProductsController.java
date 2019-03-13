@@ -34,6 +34,12 @@ public class ProductsController implements Initializable {
     @FXML
     private Button sortDescending;
 
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button clearButton;
+
     // This list will hold all available data.
     private final ObservableList<String> products;
 
@@ -83,7 +89,11 @@ public class ProductsController implements Initializable {
 
         // visibility control for the list view
         BooleanBinding sortingButtonsAreFocused = Bindings.or(sortAscending.focusedProperty(), sortDescending.focusedProperty());
-        BooleanBinding listViewVisibility = Bindings.or(textField.focusedProperty(), sortingButtonsAreFocused);
+        BooleanBinding listViewVisibility = Bindings.or(textField.focusedProperty(), sortingButtonsAreFocused)
+                .or(addButton.focusedProperty())
+                .or(listView.focusedProperty())
+                .or(clearButton.focusedProperty());
+
         listView.visibleProperty().bind(listViewVisibility);
 
         // selection of comparator for sorting
@@ -92,7 +102,7 @@ public class ProductsController implements Initializable {
 
         // filter mechanism
         textField.textProperty().addListener((o,a,b)->{
-            if (null != b && b != a) {
+            if (null != b && !b.equalsIgnoreCase(a)) {
                 Predicate<String> filterCriterion = value->value.toLowerCase()
                         .contains(textField.textProperty().getValueSafe().toLowerCase());
                 filtered.setPredicate(filterCriterion);
@@ -101,10 +111,29 @@ public class ProductsController implements Initializable {
 
         // update text field on selection in list view
         listView.getSelectionModel().selectedItemProperty().addListener((o,a,b)->{
-            if (null != b && b != a && !"".equalsIgnoreCase(b)) {
+            if (null != b && !b.equalsIgnoreCase(a) && !"".equalsIgnoreCase(b)) {
                 Platform.runLater(()->textField.setText(b));
             }
         });
+
+        // add new item to list from text field
+        addButton.setOnAction(actionEvent -> {
+            String value = textField.getText();
+            if (null != value && !"".equals(value) && sorted.isEmpty()){
+                products.add(value);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Value not unique");
+                alert.setContentText("Only unique new values can be added.");
+                Platform.runLater(alert::showAndWait);
+            }
+        });
+
+        // add new item to list from text field
+        clearButton.setOnAction(actionEvent -> {
+            Platform.runLater(()->textField.setText(""));
+        });
+
 
         quitButton.setOnAction(actionEvent -> Platform.exit());
     }

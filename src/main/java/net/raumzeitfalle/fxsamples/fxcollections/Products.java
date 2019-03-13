@@ -13,8 +13,8 @@ public class Products extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = createView();
-        primaryStage.setTitle("Products: Sortable and Filterable ListView");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setTitle("Sortable and Filterable Lists, Bindings");
+        primaryStage.setScene(new Scene(root, 640, 480));
         primaryStage.show();
     }
 
