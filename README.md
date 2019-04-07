@@ -17,7 +17,7 @@ $ ./gradlew build
 $ ./gradlew runJfx
 ```
 
-On Windows the commands are the same, exact the Gradle-Wrapper call. Here both tasks (`build`, `jfxRun) are called in one line.
+On Windows the commands are the same, exact the Gradle-Wrapper call. Here both tasks (`build`, `jfxRun`) are called in one line.
 
 ```Cmd
 > gradlew build runJfx
